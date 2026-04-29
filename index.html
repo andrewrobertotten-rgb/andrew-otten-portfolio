@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrew Otten — Content Strategist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;
+  --dark:#0F0F0F;
+  --surface:#161616;
+  --surface2:#1E1E1E;
+  --electric:#00F0FF;
+  --electric2:#7B5CFA;
+  --white:#F0F0F0;
+  --muted:#666;
+  --muted2:#444;
+  --border:rgba(255,255,255,0.07);
+  --display:'Bebas Neue',sans-serif;
+  --sans:'Inter',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 3rem;height:64px;
+  background:rgba(8,8,8,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--display);font-size:1.4rem;letter-spacing:0.06em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--electric)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--electric)}
+.nav-cta{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 1.25rem;border:1px solid var(--electric);color:var(--electric);text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:var(--electric);color:var(--black)}
+
+/* ── HERO ── */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:6rem 3rem 4rem;overflow:hidden;}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;background:var(--black);}
+#hero-video{width:100%;height:100%;object-fit:cover;opacity:0.45;}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,0.3) 50%,rgba(8,8,8,0.5) 100%);}
+.hero-overlay-left{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(8,8,8,0.8) 30%,transparent 70%);}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero-tag{display:inline-flex;align-items:center;gap:0.75rem;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.12em;color:var(--electric);margin-bottom:1.5rem;}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--electric)}
+.hero h1{font-family:var(--display);font-size:clamp(5rem,12vw,10rem);line-height:0.9;letter-spacing:0.02em;color:var(--white);margin-bottom:1.5rem;}
+.hero h1 .accent{-webkit-text-stroke:1px var(--electric);color:transparent;}
+.hero-sub{font-size:1.05rem;color:rgba(240,240,240,0.5);max-width:480px;line-height:1.75;margin-bottom:2.5rem;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:0.8rem 2rem;font-family:var(--sans);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;border:1px solid;cursor:pointer;transition:all 0.22s;}
+.btn-electric{background:var(--electric);border-color:var(--electric);color:var(--black);font-weight:600}
+.btn-electric:hover{background:transparent;color:var(--electric)}
+.btn-ghost{background:transparent;border-color:rgba(240,240,240,0.2);color:var(--white)}
+.btn-ghost:hover{border-color:var(--white)}
+.hero-scroll{position:absolute;bottom:2rem;right:3rem;z-index:2;font-family:var(--mono);font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,240,240,0.25);writing-mode:vertical-rl;}
+.video-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;background:linear-gradient(135deg,#0A0A0A 0%,#111 50%,#0D0D0D 100%);}
+.vp-label{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--electric);opacity:0.6;border:1px solid rgba(0,240,255,0.2);padding:0.5rem 1.25rem;}
+.vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;width:60%;max-width:400px;opacity:0.15;}
+.vp-cell{aspect-ratio:16/9;background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.1);}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--electric);padding:0.7rem 0;overflow:hidden;}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 22s linear infinite;}
+.marquee-track span{font-family:var(--display);font-size:1.1rem;letter-spacing:0.12em;color:var(--black);padding:0 2.5rem;}
+.marquee-sep{color:rgba(0,0,0,0.3)}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+section{padding:6rem 3rem}
+.s-label{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--electric);margin-bottom:1rem;display:flex;align-items:center;gap:0.75rem;}
+.s-label::after{content:'';width:40px;height:1px;background:var(--electric);opacity:0.5}
+.s-title{font-family:var(--display);font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;letter-spacing:0.03em;color:var(--white);margin-bottom:3rem;}
+.s-title .outline{-webkit-text-stroke:1px rgba(240,240,240,0.4);color:transparent}
+
+/* ── ABOUT ── */
+#about{background:var(--dark)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-text p{color:rgba(240,240,240,0.5);margin-bottom:1.25rem;font-size:1rem}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.stat-box{background:var(--surface);padding:2rem;border:1px solid var(--border);transition:border-color 0.2s;}
+.stat-box:hover{border-color:rgba(0,240,255,0.3)}
+.stat-num{font-family:var(--display);font-size:3.5rem;color:var(--electric);line-height:1;}
+.stat-label{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;color:var(--muted);margin-top:0.5rem}
+
+/* ── VIDEO CARDS ── */
+#journalism{background:var(--black)}
+.work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.work-card{position:relative;overflow:hidden;cursor:pointer;background:var(--surface);border:1px solid var(--border);transition:border-color 0.3s;}
+.work-card:hover{border-color:rgba(0,240,255,0.35)}
+.work-card:nth-child(1){grid-column:span 7}
+.work-card:nth-child(2){grid-column:span 5}
+.work-card:nth-child(3){grid-column:span 5}
+.work-card:nth-child(4){grid-column:span 7}
+.card-thumb{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+/* Fallback gradient backgrounds — hidden once you add a real thumbnail img */
+.ct-1{background:linear-gradient(135deg,#0a0a14,#14142a)}
+.ct-2{background:linear-gradient(135deg,#0a140a,#141f14)}
+.ct-3{background:linear-gradient(135deg,#140a0a,#2a1414)}
+.ct-4{background:linear-gradient(135deg,#0a0a0a,#1a1a1a)}
+/* Thumbnail image inside card-thumb */
+.card-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0.85;transition:opacity 0.3s;}
+.work-card:hover .card-thumb img{opacity:0.6;}
+/* Hover darkening overlay */
+.card-thumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0);transition:background 0.3s;z-index:1;}
+.work-card:hover .card-thumb::after{background:rgba(0,0,0,0.3);}
+.card-type-badge{position:absolute;top:0.75rem;left:0.75rem;font-family:var(--mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.65rem;background:var(--electric);color:var(--black);font-weight:600;z-index:2;}
+.play-btn{width:52px;height:52px;border-radius:50%;border:1.5px solid rgba(0,240,255,0.6);display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:2;}
+.work-card:hover .play-btn{background:var(--electric);border-color:var(--electric)}
+.work-card:hover .play-btn svg path{fill:var(--black)}
+.card-body{padding:1.25rem 1.5rem 1.5rem}
+.card-meta{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--electric);margin-bottom:0.5rem}
+.card-title{font-family:var(--display);font-size:1.5rem;letter-spacing:0.03em;line-height:1.1;margin-bottom:0.5rem;color:var(--white)}
+.card-desc{font-size:0.85rem;color:var(--muted);line-height:1.6}
+
+/* ── IMPACT / STATS SECTION ── */
+#impact{background:var(--dark);position:relative;overflow:hidden;}
+#impact::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 60% 50%, rgba(0,240,255,0.04) 0%, transparent 70%);
+}
+.impact-intro{max-width:560px;margin-bottom:4rem;}
+.impact-intro p{color:rgba(240,240,240,0.5);font-size:1rem;line-height:1.75;}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:4rem;}
+.impact-stat{
+  background:var(--surface);border:1px solid var(--border);
+  padding:2.5rem 2rem;text-align:center;
+  transition:border-color 0.25s,background 0.25s;
+  position:relative;overflow:hidden;
+}
+.impact-stat::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--electric),var(--electric2));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.35s;
+}
+.impact-stat:hover{border-color:rgba(0,240,255,0.25);background:var(--surface2)}
+.impact-stat:hover::before{transform:scaleX(1)}
+.impact-num{font-family:var(--display);font-size:3.8rem;color:var(--electric);line-height:1;margin-bottom:0.5rem;}
+.impact-label{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);line-height:1.5;}
+.impact-context{font-family:var(--mono);font-size:0.68rem;color:rgba(0,240,255,0.35);margin-top:0.4rem;letter-spacing:0.05em;}
+.impact-cards{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.impact-card{background:var(--surface);border:1px solid var(--border);padding:2.5rem;}
+.impact-card-label{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--electric);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;}
+.impact-card-label::after{content:'';flex:1;max-width:30px;height:1px;background:var(--electric);opacity:0.4;}
+.impact-card-title{font-family:var(--display);font-size:1.6rem;letter-spacing:0.03em;color:var(--white);margin-bottom:0.75rem;line-height:1.1;}
+.impact-card-desc{font-size:0.88rem;color:rgba(240,240,240,0.4);line-height:1.7;}
+.impact-badge-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.25rem;}
+.impact-badge{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.3rem 0.75rem;border:1px solid rgba(0,240,255,0.2);color:rgba(0,240,255,0.55);}
+
+/* ── PHOTOGRAPHY ── */
+#photography{background:var(--surface)}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.photo-item{position:relative;overflow:hidden;cursor:pointer}
+.photo-item:hover .photo-hover-overlay{opacity:1}
+.photo-item:hover .photo-box{transform:scale(1.04)}
+.photo-box{
+  width:100%;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);transition:transform 0.45s ease;
+  position:relative;overflow:hidden;
+}
+/* ── PHOTO ASPECT RATIOS — keep these, they control shape of each slot ── */
+.pb-1{aspect-ratio:2/3;}
+.pb-2{aspect-ratio:4/3;}
+.pb-3{aspect-ratio:4/3;}
+.pb-4{aspect-ratio:21/9;}
+/* Fallback gradient — only visible if no img is inside the box */
+.pb-1:not(:has(img)){background:linear-gradient(170deg,#0a0f14,#111820)}
+.pb-2:not(:has(img)){background:linear-gradient(135deg,#0f140a,#181f10)}
+.pb-3:not(:has(img)){background:linear-gradient(135deg,#140a0f,#20101a)}
+.pb-4:not(:has(img)){background:linear-gradient(135deg,#0a0a14,#10102a)}
+/* The actual photo image */
+.photo-box img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0;}
+.photo-item:nth-child(1){grid-row:span 2}
+.photo-item:nth-child(4){grid-column:span 2}
+.photo-label{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(0,240,255,0.25);position:relative;z-index:1;}
+/* Hover overlay — shows caption text */
+.photo-hover-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.3) 60%, transparent 100%);
+  border:1px solid rgba(0,240,255,0.3);
+  opacity:0;transition:opacity 0.3s;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:1.5rem;
+  z-index:2;
+}
+.photo-caption-title{font-family:var(--display);font-size:1.2rem;letter-spacing:0.05em;color:var(--electric);margin-bottom:0.4rem;line-height:1.1;}
+.photo-caption-text{font-size:0.8rem;color:rgba(240,240,240,0.65);line-height:1.5;font-style:italic;}
+
+/* ── ARTICLES ── */
+#articles{background:var(--dark)}
+.article-list{display:flex;flex-direction:column}
+.article-link-wrap{text-decoration:none;color:inherit;display:block;}
+.article-item{display:grid;grid-template-columns:72px 1fr 48px;align-items:center;gap:2rem;padding:1.75rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all 0.2s;}
+.article-item:first-child{border-top:1px solid var(--border)}
+.article-link-wrap:hover .article-item{padding-left:1rem;padding-right:0.5rem;margin:0 -1rem;border-color:transparent;background:var(--surface)}
+.article-num{font-family:var(--display);font-size:2.5rem;color:var(--muted2);letter-spacing:0.05em}
+.article-tag{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--electric);margin-bottom:0.35rem}
+.article-title{font-family:var(--display);font-size:1.4rem;letter-spacing:0.03em;color:var(--white);margin-bottom:0.25rem}
+.article-pub{font-size:0.8rem;color:var(--muted)}
+.article-arrow{color:var(--muted);font-size:1.3rem;transition:all 0.2s;text-align:right}
+.article-link-wrap:hover .article-arrow{color:var(--electric);transform:translateX(4px)}
+
+/* ── PROJECTS ── */
+#projects{background:var(--black)}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.project-card{background:var(--surface);border:1px solid var(--border);padding:2.5rem;cursor:pointer;transition:border-color 0.25s,background 0.25s;position:relative;overflow:hidden;}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--electric),var(--electric2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.project-card:hover{border-color:rgba(0,240,255,0.2);background:var(--surface2)}
+.project-card:hover::before{transform:scaleX(1)}
+.project-icon{width:44px;height:44px;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,240,255,0.2);font-size:1.1rem;}
+.project-num{position:absolute;top:1.5rem;right:1.75rem;font-family:var(--display);font-size:5rem;color:rgba(255,255,255,0.03);letter-spacing:0.05em;line-height:1;}
+.project-title{font-family:var(--display);font-size:1.5rem;letter-spacing:0.03em;color:var(--white);margin-bottom:0.75rem;line-height:1.1}
+.project-desc{font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem}
+.project-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tag{font-family:var(--mono);font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.65rem;border:1px solid var(--muted2);color:var(--muted);}
+
+/* ── RESUME ── */
+#resume{background:var(--surface)}
+.resume-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem}
+.resume-col-label{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--electric);margin-bottom:2rem;display:flex;align-items:center;gap:0.75rem;}
+.resume-col-label::after{content:'';flex:1;max-width:40px;height:1px;background:var(--electric);opacity:0.4}
+.resume-entry{margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.resume-entry:last-child{border-bottom:none}
+.resume-role{font-family:var(--display);font-size:1.3rem;letter-spacing:0.03em;color:var(--white);margin-bottom:0.25rem}
+.resume-company{font-family:var(--mono);font-size:0.78rem;color:var(--electric);margin-bottom:0.25rem;letter-spacing:0.06em}
+.resume-date{font-size:0.75rem;color:var(--muted);margin-bottom:0.75rem;letter-spacing:0.05em}
+.resume-detail{font-size:0.88rem;color:rgba(240,240,240,0.4);line-height:1.65}
+.skill-grid{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem}
+.skill-pill{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em;padding:0.3rem 0.8rem;border:1px solid rgba(0,240,255,0.2);color:rgba(0,240,255,0.6);}
+.resume-cta{text-align:center;margin-top:3rem}
+
+/* ── CONTACT ── */
+#contact{background:var(--black);text-align:center;padding:8rem 3rem}
+.contact-title{font-family:var(--display);font-size:clamp(3rem,7vw,6rem);line-height:0.95;letter-spacing:0.03em;color:var(--white);margin-bottom:1.25rem;}
+.contact-title .outline{-webkit-text-stroke:1px rgba(0,240,255,0.5);color:transparent}
+.contact-sub{font-size:1rem;color:var(--muted);margin-bottom:3rem;max-width:400px;margin-left:auto;margin-right:auto}
+.contact-links{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
+.c-link{font-family:var(--mono);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--muted2);padding-bottom:2px;transition:color 0.2s,border-color 0.2s;}
+.c-link:hover{color:var(--electric);border-color:var(--electric)}
+
+footer{background:var(--dark);color:var(--muted2);text-align:center;padding:1.75rem;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.08em;border-top:1px solid var(--border);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{animation:fadeUp 0.7s ease both 0.3s}
+.hero h1{animation:fadeUp 0.8s ease both 0.5s}
+.hero-sub{animation:fadeUp 0.8s ease both 0.7s}
+.hero-btns{animation:fadeUp 0.8s ease both 0.9s}
+
+/* ── VIDEO LIGHTBOX ── */
+.lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;}
+.lightbox.active{display:flex;}
+.lightbox-inner{position:relative;width:90%;max-width:1000px;aspect-ratio:16/9;}
+.lightbox-inner iframe{width:100%;height:100%;border:none;}
+.lightbox-close{position:absolute;top:-2.5rem;right:0;font-family:var(--mono);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(240,240,240,0.5);cursor:pointer;transition:color 0.2s;background:none;border:none;}
+.lightbox-close:hover{color:var(--electric);}
+
+/* ── PHOTO LIGHTBOX ── */
+.photo-lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.95);align-items:center;justify-content:center;flex-direction:column;padding:2rem;}
+.photo-lightbox.active{display:flex;}
+.photo-lightbox-img-wrap{position:relative;max-width:1100px;width:100%;}
+.photo-lightbox img{width:100%;max-height:78vh;object-fit:contain;display:block;}
+.photo-lightbox-caption{max-width:1100px;width:100%;margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(0,240,255,0.15);}
+.photo-lightbox-caption-title{font-family:var(--display);font-size:1.4rem;letter-spacing:0.04em;color:var(--electric);margin-bottom:0.35rem;}
+.photo-lightbox-caption-text{font-size:0.88rem;color:rgba(240,240,240,0.5);line-height:1.6;font-style:italic;}
+.photo-lightbox-close{position:absolute;top:1.5rem;right:2rem;font-family:var(--mono);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(240,240,240,0.4);cursor:pointer;transition:color 0.2s;background:none;border:none;}
+.photo-lightbox-close:hover{color:var(--electric);}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="#hero">ANDREW<span>.</span>OTTEN</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#journalism">Video</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#photography">Photo</a></li>
+    <li><a href="#articles">Writing</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#resume">Résumé</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-video-wrap">
+    <!--
+      ╔══════════════════════════════════════════════════╗
+      ║  SWAP YOUR HERO VIDEO                            ║
+      ║  Replace src="" with your .mp4 path or URL      ║
+      ║  Example: src="videos/reel.mp4"                 ║
+      ║  Add poster="images/hero-thumb.jpg" optionally  ║
+      ╚══════════════════════════════════════════════════╝
+    -->
+    <video id="hero-video" autoplay muted loop playsinline src="" poster=""></video>
+    <div class="video-placeholder" id="vp">
+      <div class="vp-grid">
+        <div class="vp-cell"></div><div class="vp-cell"></div><div class="vp-cell"></div>
+        <div class="vp-cell"></div><div class="vp-cell"></div><div class="vp-cell"></div>
+        <div class="vp-cell"></div><div class="vp-cell"></div><div class="vp-cell"></div>
+      </div>
+      <div class="vp-label">// Swap in your video reel — see comment above</div>
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay-left"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Content Strategist · Journalist · Cinematographer</div>
+    <h1>ANDREW<br><span class="accent">OTTEN</span></h1>
+    <p class="hero-sub">I create visuals that stop the scroll — across social, broadcast, and the frame between.</p>
+    <div class="hero-btns">
+      <a href="#journalism" class="btn btn-electric">Watch the Work</a>
+      <a href="#resume" class="btn btn-ghost">View Résumé</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll ↓</div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Video Production</span><span class="marquee-sep">·</span>
+    <span>Photography</span><span class="marquee-sep">·</span>
+    <span>Cinematography</span><span class="marquee-sep">·</span>
+    <span>Content Strategy</span><span class="marquee-sep">·</span>
+    <span>Social Media</span><span class="marquee-sep">·</span>
+    <span>Journalism</span><span class="marquee-sep">·</span>
+    <span>Storytelling</span><span class="marquee-sep">·</span>
+    <span>Editing</span><span class="marquee-sep">·</span>
+    <span>Video Production</span><span class="marquee-sep">·</span>
+    <span>Photography</span><span class="marquee-sep">·</span>
+    <span>Cinematography</span><span class="marquee-sep">·</span>
+    <span>Content Strategy</span><span class="marquee-sep">·</span>
+    <span>Social Media</span><span class="marquee-sep">·</span>
+    <span>Journalism</span><span class="marquee-sep">·</span>
+    <span>Storytelling</span><span class="marquee-sep">·</span>
+    <span>Editing</span><span class="marquee-sep">·</span>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="s-label">About</div>
+      <h2 class="s-title">Built <span class="outline">Online.</span><br>Fluent in the Feed.</h2>
+      <p>I'm a content strategist with roots in talent coordination, broadcast journalism, cinematography, and digital engagement. From pre-production through final edit, I own the full creative process — lighting, camera, motion, and the story underneath it all.</p>
+      <p>Whether you need a social content engine, a video production team, or someone who can do both — I've been there.</p>
+      <br>
+      <a href="#contact" class="btn btn-electric" style="display:inline-block">Let's Talk</a>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years in media & production</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Published articles & packages</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Platforms & beats covered</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Stories left to tell</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── VIDEO / JOURNALISM ─── -->
+<section id="journalism">
+  <div class="s-label">Video Production and Reel</div>
+  <h2 class="s-title">Frames that <span class="outline">hit.</span></h2>
+  <div class="work-grid">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  VIDEO CARD 1                                                ║
+    ║  1. Replace the YouTube embed URL in onclick=""              ║
+    ║  2. Add a thumbnail: put your image in images/ folder and   ║
+    ║     uncomment the <img> line below, updating the filename   ║
+    ║  3. Update card-meta, card-title, card-desc text            ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <div class="work-card" onclick="openVideo('https://www.youtube.com/embed/4d_mgyIj8Ss?autoplay=1')" style="cursor:pointer;">
+      <div class="card-thumb ct-1">
+        <!-- THUMBNAIL: uncomment and update src when ready -->
+        <!-- <img src="images/thumb-1.jpg" alt="An Ode to Cam Kreitner"> -->
+        <span class="card-type-badge">Broadcast Feature</span>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(0,240,255,0.8)"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">Broadcast Feature · 2026</div>
+        <div class="card-title">An Ode to Cam Kreitner</div>
+        <div class="card-desc">A tribute package produced for Grady Newsource covering the legacy of a community figure.</div>
+      </div>
+    </div>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  VIDEO CARD 2                                                ║
+    ║  Replace YOUR_VIDEO_ID with the ID from your YouTube URL    ║
+    ║  e.g. youtube.com/watch?v=XXXXXXXX → use XXXXXXXX           ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <div class="work-card" onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1')" style="cursor:pointer;">
+      <div class="card-thumb ct-2">
+        <!-- THUMBNAIL: uncomment and update src when ready -->
+        <!-- <img src="images/thumb-2.jpg" alt="Rising Gas Prices"> -->
+        <span class="card-type-badge">Impact Package</span>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(0,240,255,0.8)"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">Broadcast Impact Package · 2026</div>
+        <div class="card-title">Rising Gas Prices Hit Athens Businesses Where It Hurts</div>
+        <div class="card-desc">An on-the-ground look at how rising fuel costs rippled through local Athens businesses.</div>
+      </div>
+    </div>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  VIDEO CARD 3                                                ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <div class="work-card" onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1')" style="cursor:pointer;">
+      <div class="card-thumb ct-3">
+        <!-- THUMBNAIL: uncomment and update src when ready -->
+        <!-- <img src="images/thumb-3.jpg" alt="Flock Safety Cameras"> -->
+        <span class="card-type-badge">Investigative</span>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(0,240,255,0.8)"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">Investigative Package · 2026</div>
+        <div class="card-title">Flock Safety Cameras Expand in Northeast Georgia Amid National Backlash</div>
+        <div class="card-desc">Investigating the rapid spread of AI surveillance cameras across Northeast Georgia communities.</div>
+      </div>
+    </div>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  VIDEO CARD 4                                                ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+    <div class="work-card" onclick="openVideo('https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1')" style="cursor:pointer;">
+      <div class="card-thumb ct-4">
+        <!-- THUMBNAIL: uncomment and update src when ready -->
+        <!-- <img src="images/thumb-4.jpg" alt="Card 4 title"> -->
+        <span class="card-type-badge">Social / Digital</span>
+        <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16" fill="none"><path d="M1 1l12 7L1 15V1z" fill="rgba(0,240,255,0.8)"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">Digital · 2025</div>
+        <div class="card-title">Social Campaign or Series</div>
+        <div class="card-desc">Platform, reach, and the strategic thinking behind the content.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── IMPACT / GRADY NEWSOURCE STATS ─── -->
+<section id="impact">
+  <div class="s-label">Grady Newsource — Managing Editor of Social Media</div>
+  <h2 class="s-title">The <span class="outline">numbers.</span></h2>
+  <div class="impact-intro">
+    <p>As Managing Editor of Social Media and Multimedia Journalist at Grady Newsource, I led the digital presence of one of the country's top student-run newsrooms — growing audience, driving engagement, and overseeing content strategy across every platform.</p>
+  </div>
+
+  <!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  UPDATE YOUR STATS BELOW                                        ║
+  ║  Change the numbers inside .impact-num and labels in            ║
+  ║  .impact-label and .impact-context to match your real metrics   ║
+  ╚══════════════════════════════════════════════════════════════════╝
+  -->
+  <div class="impact-grid">
+    <div class="impact-stat">
+      <div class="impact-num">000K</div>
+      <div class="impact-label">Total Impressions</div>
+      <div class="impact-context">Across all platforms</div>
+    </div>
+    <div class="impact-stat">
+      <div class="impact-num">000%</div>
+      <div class="impact-label">Engagement Rate Growth</div>
+      <div class="impact-context">During tenure</div>
+    </div>
+    <div class="impact-stat">
+      <div class="impact-num">000</div>
+      <div class="impact-label">Pieces of Content Published</div>
+      <div class="impact-context">Articles, videos & social posts</div>
+    </div>
+    <div class="impact-stat">
+      <div class="impact-num">000+</div>
+      <div class="impact-label">Followers Gained</div>
+      <div class="impact-context">Net new across platforms</div>
+    </div>
+  </div>
+
+  <div class="impact-cards">
+    <div class="impact-card">
+      <div class="impact-card-label">Role</div>
+      <div class="impact-card-title">Managing Editor of Social Media</div>
+      <div class="impact-card-desc">Led content strategy and publishing across Grady Newsource's social platforms. Coordinated with reporters and producers to adapt stories for digital audiences, oversaw posting schedules, and analyzed performance data to grow reach and engagement.</div>
+      <div class="impact-badge-row">
+        <span class="impact-badge">Instagram</span>
+        <span class="impact-badge">YouTube</span>
+        <span class="impact-badge">Facebook</span>
+        <span class="impact-badge">Strategy</span>
+      </div>
+    </div>
+    <div class="impact-card">
+      <div class="impact-card-label">Role</div>
+      <div class="impact-card-title">Multimedia Journalist</div>
+      <div class="impact-card-desc">Reported, shot, and edited broadcast packages and digital stories for Grady Newsource. Covered beats including local government, community affairs, and enterprise reporting — producing content that aired on-air and across digital platforms.</div>
+      <div class="impact-badge-row">
+        <span class="impact-badge">Broadcast</span>
+        <span class="impact-badge">Video</span>
+        <span class="impact-badge">Photography</span>
+        <span class="impact-badge">Writing</span>
+        <span class="impact-badge">Editing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHOTOGRAPHY ─── -->
+<section id="photography">
+  <div class="s-label">Photography</div>
+  <h2 class="s-title">Every shot <span class="outline">intentional.</span></h2>
+  <div class="photo-grid">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  HOW TO ADD PHOTOS                                           ║
+    ║  1. Put your image files in your images/ folder             ║
+    ║  2. Inside each .photo-box, add:                            ║
+    ║     <img src="images/your-photo.jpg" alt="description">     ║
+    ║  3. Update the caption-title and caption-text below         ║
+    ║  4. The photo will fill the box and be clickable            ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+
+    <!-- PHOTO 1 — tall portrait slot (spans 2 rows) -->
+    <div class="photo-item" onclick="openPhoto('images/photo-1.jpg', 'Caption Title Here', 'AP-style caption describing this photo — subject, location, date, and context. Athens, Ga. — Month Year.')">
+      <div class="photo-box pb-1">
+        <!-- ADD YOUR IMAGE: <img src="images/photo-1.jpg" alt="description"> -->
+        <span class="photo-label">Portrait</span>
+      </div>
+      <div class="photo-hover-overlay">
+        <div class="photo-caption-title">Caption Title Here</div>
+        <div class="photo-caption-text">Short description of this image — subject, location, context.</div>
+      </div>
+    </div>
+
+    <!-- PHOTO 2 — wide landscape slot -->
+    <div class="photo-item" onclick="openPhoto('images/photo-2.jpg', 'Caption Title Here', 'AP-style caption describing this photo — subject, location, date, and context. Athens, Ga. — Month Year.')">
+      <div class="photo-box pb-2">
+        <!-- ADD YOUR IMAGE: <img src="images/photo-2.jpg" alt="description"> -->
+        <span class="photo-label">Landscape</span>
+      </div>
+      <div class="photo-hover-overlay">
+        <div class="photo-caption-title">Caption Title Here</div>
+        <div class="photo-caption-text">Short description of this image — subject, location, context.</div>
+      </div>
+    </div>
+
+    <!-- PHOTO 3 — wide editorial slot -->
+    <div class="photo-item" onclick="openPhoto('images/photo-3.jpg', 'Caption Title Here', 'AP-style caption describing this photo — subject, location, date, and context. Athens, Ga. — Month Year.')">
+      <div class="photo-box pb-3">
+        <!-- ADD YOUR IMAGE: <img src="images/photo-3.jpg" alt="description"> -->
+        <span class="photo-label">Editorial</span>
+      </div>
+      <div class="photo-hover-overlay">
+        <div class="photo-caption-title">Caption Title Here</div>
+        <div class="photo-caption-text">Short description of this image — subject, location, context.</div>
+      </div>
+    </div>
+
+    <!-- PHOTO 4 — ultra-wide cinematic slot (spans 2 columns) -->
+    <div class="photo-item" onclick="openPhoto('images/photo-4.jpg', 'Caption Title Here', 'AP-style caption describing this photo — subject, location, date, and context. Athens, Ga. — Month Year.')">
+      <div class="photo-box pb-4">
+        <!-- ADD YOUR IMAGE: <img src="images/photo-4.jpg" alt="description"> -->
+        <span class="photo-label">Cinematography</span>
+      </div>
+      <div class="photo-hover-overlay">
+        <div class="photo-caption-title">Caption Title Here</div>
+        <div class="photo-caption-text">Short description of this image — subject, location, context.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── ARTICLES ─── -->
+<section id="articles">
+  <div class="s-label">Journalism & Writing</div>
+  <h2 class="s-title">Words that <span class="outline">land.</span></h2>
+  <div class="article-list">
+
+    <!--
+    ╔══════════════════════════════════════════════════════════════╗
+    ║  HOW TO UPDATE ARTICLES                                      ║
+    ║  1. Replace href="" with the real article URL               ║
+    ║  2. Update article-tag, article-title, article-pub text     ║
+    ║  target="_blank" keeps your portfolio open in original tab  ║
+    ╚══════════════════════════════════════════════════════════════╝
+    -->
+
+    <a class="article-link-wrap" href="https://gradynewsource.com" target="_blank">
+      <div class="article-item">
+        <div class="article-num">01</div>
+        <div>
+          <div class="article-tag">Investigative · Grady Newsource</div>
+          <div class="article-title">More Cameras, More Questions: Inside Northeast Georgia's Growing Surveillance Network</div>
+          <div class="article-pub">April 2026 · Grady Newsource</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </div>
+    </a>
+
+    <a class="article-link-wrap" href="https://gradynewsource.com" target="_blank">
+      <div class="article-item">
+        <div class="article-num">02</div>
+        <div>
+          <div class="article-tag">Feature · Grady Newsource</div>
+          <div class="article-title">A Kingdom Built from Borrowed Time: Local Renaissance Festival Built on Community</div>
+          <div class="article-pub">April 2026 · Grady Newsource</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </div>
+    </a>
+
+    <a class="article-link-wrap" href="https://gradynewsource.com" target="_blank">
+      <div class="article-item">
+        <div class="article-num">03</div>
+        <div>
+          <div class="article-tag">Feature · Grady Newsource</div>
+          <div class="article-title">From Immigrant Roots to Consistent Excellence: Juan Henao's Leadership at La Parrilla</div>
+          <div class="article-pub">November 2025 · Grady Newsource</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </div>
+    </a>
+
+    <a class="article-link-wrap" href="https://gradynewsource.com" target="_blank">
+      <div class="article-item">
+        <div class="article-num">04</div>
+        <div>
+          <div class="article-tag">Enterprise · Grady Newsource</div>
+          <div class="article-title">Food Deserts Persist in Georgia Despite Local Efforts</div>
+          <div class="article-pub">October 2025 · Grady Newsource</div>
+        </div>
+        <div class="article-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <div class="s-label">Other Projects</div>
+  <h2 class="s-title">Beyond the <span class="outline">beat.</span></h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-icon">🎬</div>
+      <div class="project-title">Backlight Film Festival</div>
+      <div class="project-desc">Produced end-of-red-carpet interviews featuring filmmakers and festival sponsors to drive promotional value and stakeholder engagement. Utilized camera skills to capture engaging photos and videos of participants on the red carpet, enhancing the event's promotional content. Assisted the content team with behind-the-scenes setup, contributing to the festival's professional and seamless presentation.</div>
+      <div class="project-tags"><span class="tag">Production</span><span class="tag">Video</span><span class="tag">Photography</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-icon">📱</div>
+      <div class="project-title">Production / Direction</div>
+      <div class="project-desc">Branded content, creative direction, or a production role that shows your range.</div>
+      <div class="project-tags"><span class="tag">Production</span><span class="tag">Direction</span><span class="tag">Video</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-icon">✦</div>
+      <div class="project-title">Independent Project</div>
+      <div class="project-desc">Podcast, newsletter, photo series, or passion project that shows ownership and initiative.</div>
+      <div class="project-tags"><span class="tag">Independent</span><span class="tag">Creative</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESUME ─── -->
+<section id="resume">
+  <div class="s-label">Résumé</div>
+  <h2 class="s-title">The <span class="outline">record.</span></h2>
+  <div class="resume-layout">
+    <div>
+      <div class="resume-col-label">Experience</div>
+      <div class="resume-entry">
+        <div class="resume-role">Talent Coordinator</div>
+        <div class="resume-company">// Fixated</div>
+        <div class="resume-date">Sept. 2024 – Feb. 2025 / Summer 2025</div>
+        <div class="resume-detail">Partnered closely with managers and team members to support top-tier influencer talent through brand partnership outreach and campaign coordination. Assisted in content strategy calls to brainstorm creative ways to grow audience engagement and strengthen creator-brand alignment. Reviewed and approved Whop campaign clips, ensuring all content reflected brand standards and supported overall campaign goals.</div>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-role">Managing Editor of Social Media / Multimedia Journalist</div>
+        <div class="resume-company">// Grady Newsource</div>
+        <div class="resume-date">Jan. 2026 – May 2026</div>
+        <div class="resume-detail">Led social media strategy and digital content publishing for one of the country's top student-run newsrooms. Reported, shot, and edited broadcast packages and digital stories across multiple beats.</div>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-role">Cinematographer / Videographer</div>
+        <div class="resume-company">// Freelance</div>
+        <div class="resume-date">April 2026 – Present</div>
+        <div class="resume-detail">Projects shot, clients, equipment, and scope of productions.</div>
+      </div>
+      <div class="resume-entry">
+        <div class="resume-role">Bachelor of Arts, Journalism</div>
+        <div class="resume-company">// University of Georgia</div>
+        <div class="resume-date">Graduate May 2026</div>
+        <div class="resume-detail">Design and Media Minor · News Literacy Certificate</div>
+      </div>
+    </div>
+    <div>
+      <div class="resume-col-label">Skills</div>
+      <div class="skill-grid">
+        <span class="skill-pill">Video Production</span>
+        <span class="skill-pill">Photography</span>
+        <span class="skill-pill">Cinematography</span>
+        <span class="skill-pill">Adobe Premiere</span>
+        <span class="skill-pill">After Effects</span>
+        <span class="skill-pill">DaVinci Resolve</span>
+        <span class="skill-pill">Lightroom</span>
+        <span class="skill-pill">Final Cut Pro</span>
+        <span class="skill-pill">Social Media</span>
+        <span class="skill-pill">Content Strategy</span>
+        <span class="skill-pill">Storytelling</span>
+        <span class="skill-pill">Broadcast Journalism</span>
+        <span class="skill-pill">AP Style</span>
+        <span class="skill-pill">Script Writing</span>
+      </div>
+    </div>
+  </div>
+  <div class="resume-cta">
+    <!-- Update resume.pdf to match your actual PDF filename -->
+    <a href="resume.pdf" class="btn btn-electric">Download Full Résumé (PDF)</a>
+  </div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="s-label" style="justify-content:center">Let's Work Together</div>
+  <h2 class="contact-title">Ready to build<br>your <span class="outline">brand?</span></h2>
+  <p class="contact-sub">Open to full-time roles in content strategy, social media, and production. Let's build something worth watching.</p>
+  <div class="contact-links">
+    <a href="mailto:andrewrobertotten@gmail.com" class="c-link" target="_blank">Email</a>
+    <a href="https://www.linkedin.com/in/andrewotten222" class="c-link" target="_blank">LinkedIn</a>
+    <a href="https://www.instagram.com/andreww.otten/" class="c-link" target="_blank">Instagram</a>
+  </div>
+</section>
+
+<footer>© 2026 Andrew Otten — All rights reserved</footer>
+
+<!-- ─── VIDEO LIGHTBOX ─── -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+    <iframe id="lightbox-iframe" src="" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- ─── PHOTO LIGHTBOX ─── -->
+<div class="photo-lightbox" id="photo-lightbox">
+  <button class="photo-lightbox-close" onclick="closePhoto()">✕ Close</button>
+  <div class="photo-lightbox-img-wrap">
+    <img id="photo-lightbox-img" src="" alt="">
+  </div>
+  <div class="photo-lightbox-caption">
+    <div class="photo-lightbox-caption-title" id="photo-lightbox-title"></div>
+    <div class="photo-lightbox-caption-text" id="photo-lightbox-text"></div>
+  </div>
+</div>
+
+<script>
+// ── Hero video placeholder logic ──
+const vid = document.getElementById('hero-video');
+const vp = document.getElementById('vp');
+if(vid && vid.src && vid.src !== window.location.href){
+  vid.style.display='block';
+  vp.style.display='none';
+} else {
+  vid.style.display='none';
+  vp.style.display='flex';
+}
+
+// ── Video lightbox ──
+function openVideo(url) {
+  document.getElementById('lightbox-iframe').src = url;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox-iframe').src = '';
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+// ── Photo lightbox ──
+function openPhoto(src, title, caption) {
+  document.getElementById('photo-lightbox-img').src = src;
+  document.getElementById('photo-lightbox-title').textContent = title;
+  document.getElementById('photo-lightbox-text').textContent = caption;
+  document.getElementById('photo-lightbox').classList.add('active');
+}
+function closePhoto() {
+  document.getElementById('photo-lightbox').classList.remove('active');
+  document.getElementById('photo-lightbox-img').src = '';
+}
+document.getElementById('photo-lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closePhoto();
+});
+
+// ── Close both with Escape ──
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeLightbox();
+    closePhoto();
+  }
+});
+</script>
+</body>
+</html>
